@@ -1,6 +1,7 @@
 import telebot
 import asyncio
 import bd 
+import botAPI as ba
 Task =''
 Year = 0
 Month = 0
@@ -16,14 +17,14 @@ def checknull(a):
         return ''
 
 def shwtsks(message):
-    API_KEY = '6206440201:AAE_wQTzLiIVr6CsC-aWK4AetGxgDl-ewL4'
+    API_KEY = ba.API_KEY
     bot = telebot.TeleBot(API_KEY)
     bot.send_message(message.chat.id, 'Задачи:')
     for x in bd.printtasks():           
         bot.send_message(message.chat.id, f'"{x[0]}"   {checknull(x[3])}{x[3]}-{checknull(x[2])}{x[2]}-{x[1]} в {checknull(x[4])}{x[4]}:{checknull(x[5])}{x[5]}')
 
 def runBot():
-    API_KEY = '6206440201:AAE_wQTzLiIVr6CsC-aWK4AetGxgDl-ewL4'
+    API_KEY = ba.API_KEY
     bot = telebot.TeleBot(API_KEY)
     @bot.message_handler(commands=['start', 'начать', 'привет'])
     def hello(message):

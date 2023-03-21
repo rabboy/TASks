@@ -1,47 +1,48 @@
 import sqlite3 as sl
 
-
-# tskdb = sl.connect('tasksdatabase.db')
-
-
-# cur = tskdb.cursor()
-# cur.execute("""CREATE TABLE IF NOT EXISTS tasks (
-#     task TEXT,
-#     year INT,
-#     month INT,
-#     day INT,
-#     hour INT,
-#     minute INT
-# )""")
-# tskdb.commit()
-
+def new():
+    tskdb = sl.connect('tasksdatabase.db')
+    cur = tskdb.cursor()
+    cur.execute("""CREATE TABLE IF NOT EXISTS tasks (
+        task TEXT,
+        year INT,
+        month INT,
+        day INT,
+        hour INT,
+        minute INT
+        user_id INT,
+    )""")
+    tskdb.commit()
 
 
-def add(TSK, Y, MO, D, H, MI):
+
+def add(TSK, Y, MO, D, H, MI, ID):
     tskdb = sl.connect('tasksdatabase.db')
     cur = tskdb.cursor()
     cur.execute("SELECT task FROM tasks")
-    cur.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?)", (TSK, Y, MO, D, H, MI))
-    print('Задача добавлена!')
+    cur.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?)", (TSK, Y, MO, D, H, MI, ID))
     tskdb.commit()
 
-def printtasks():
+
+def printtasks(ID):
     tskdb = sl.connect('tasksdatabase.db')
     cur = tskdb.cursor()
     alltasks = []
-    for value in cur.execute("SELECT * FROM tasks"):
+    for value in cur.execute("SELECT * FROM tasks ORDER BY year, month, day, hour, minute"):
         alltasks.append(value)
     return alltasks
 
-def remove(TSK):
+def remove(TSK, ID):
     tskdb = sl.connect('tasksdatabase.db')
     cur = tskdb.cursor()
     cur.execute(f"DELETE FROM tasks WHERE task = '{str(TSK)}'")
     tskdb.commit()
 
-
-
-
+def uptask(ID):
+    tskdb = sl.connect('tasksdatabase.db')
+    cur = tskdb.cursor()
+    cur.execute("SELECT * FROM tasks ORDER BY year, month, day, hour, minute")
+    return(cur.fetchone())
 
 # if cur.fetchone() is None:
 #     cur.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?)", (tsk, h, mo, d, h, mi))

@@ -1,4 +1,5 @@
 import telebot
+import asyncio
 import bd 
 Task =''
 Year = 0
@@ -6,13 +7,20 @@ Month = 0
 Day = 0
 Hour = 0
 Minute = 0
+mci = ''
+
+def checknull(a):
+    if a < 10:
+        return '0'
+    else:
+        return ''
 
 def shwtsks(message):
     API_KEY = '6206440201:AAE_wQTzLiIVr6CsC-aWK4AetGxgDl-ewL4'
     bot = telebot.TeleBot(API_KEY)
     bot.send_message(message.chat.id, 'Задачи:')
-    for x in bd.printtasks():
-        bot.send_message(message.chat.id, f'"{x[0]}"   {x[3]}-{x[2]}-{x[1]} в {x[4]}:{x[5]}')
+    for x in bd.printtasks():           
+        bot.send_message(message.chat.id, f'"{x[0]}"   {checknull(x[3])}{x[3]}-{checknull(x[2])}{x[2]}-{x[1]} в {checknull(x[4])}{x[4]}:{checknull(x[5])}{x[5]}')
 
 def runBot():
     API_KEY = '6206440201:AAE_wQTzLiIVr6CsC-aWK4AetGxgDl-ewL4'
@@ -74,9 +82,8 @@ def runBot():
     
     def del_task(message):
         bd.remove(message.text)
+    
+    await asyncio.sleep(3)
 
     bot.polling()
 
-
-
-runBot()

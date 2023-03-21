@@ -7,6 +7,12 @@ Day = 0
 Hour = 0
 Minute = 0
 
+def shwtsks(message):
+    API_KEY = '6206440201:AAE_wQTzLiIVr6CsC-aWK4AetGxgDl-ewL4'
+    bot = telebot.TeleBot(API_KEY)
+    bot.send_message(message.chat.id, 'Задачи:')
+    for x in bd.printtasks():
+        bot.send_message(message.chat.id, f'"{x[0]}"   {x[3]}-{x[2]}-{x[1]} в {x[4]}:{x[5]}')
 
 def runBot():
     API_KEY = '6206440201:AAE_wQTzLiIVr6CsC-aWK4AetGxgDl-ewL4'
@@ -21,10 +27,10 @@ def runBot():
             bot.send_message(message.chat.id, "Как назовём задачу?")
             bot.register_next_step_handler(message, get_task)
         elif message.text.lower() == 'посмотреть':
-            bot.send_message(message.chat.id, str(bd.printtasks()))
+            shwtsks(message)
         elif message.text.lower() == 'удалить':
             bot.send_message(message.chat.id, "Какую задачу будем удалять?")
-            bot.send_message(message.chat.id, str(bd.printtasks()))
+            shwtsks(message)
             bot.register_next_step_handler(message, del_task)
         else :
             bot.send_message(message.chat.id, "Я тебя не понимаю")

@@ -18,6 +18,8 @@ import sqlite3 as sl
 
 
 def add(TSK, Y, MO, D, H, MI):
+    tskdb = sl.connect('tasksdatabase.db')
+    cur = tskdb.cursor()
     cur.execute("SELECT task FROM tasks")
     cur.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?)", (TSK, Y, MO, D, H, MI))
     print('Задача добавлена!')
@@ -32,7 +34,9 @@ def printtasks():
     return alltasks
 
 def remove(TSK):
-    cur.execute(f"DELETE FROM tasks WHERE task = '{TSK}'")
+    tskdb = sl.connect('tasksdatabase.db')
+    cur = tskdb.cursor()
+    cur.execute(f"DELETE FROM tasks WHERE task = '{str(TSK)}'")
     tskdb.commit()
 
 

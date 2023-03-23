@@ -4,9 +4,9 @@ import bd
 import timemod as tm
 bd.new()
 
-def main():
+async def main():
     task1 = asyncio.create_task(bot.runBot())
-    task2 = asyncio.create_task(tm.startdindin(bd.uptask()))
+    task2 = asyncio.create_task(tm.startdindin())
     await task1
     await task2
 
